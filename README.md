@@ -13,7 +13,7 @@ The default AP Password is '123456789' which can be modified in the .ino as defa
 
 The default address for accessing the web server after connecting to its Access Point is 192.168.4.1
 
-If the ESP is able to connect to a network, you will need to locate its IP by reading it from the serial console, logging into your local router, or as I like to do by outputting to an OLED screen added to the project.
+If the ESP is able to connect to a network, you will need to locate its IP by reading it from the serial console, logging into your local router, or as I like to do, by outputting to an OLED screen added to the project.
 
 This base can easily be modified to serve up additional custom web pages using SPIFFS for your project.
 
