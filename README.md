@@ -3,7 +3,7 @@ Easy WiFi setup for AP or Client mode
 
 This is intended  as a base for ESP web projects that continue working regardless of rather Internet or a network is available.
 
-When the ESP fires up, it tries to connect to a network using saved credentials stored in the onboard Preferences if there are any.
+When the ESP fires up, it tries to connect to a network using saved credentials stored in the onboard Preferences, if there are any.
 
 If there are no stored credentials or it is unable to connect using stored credentials, start up APMode and serve up a web page for entering wifi credentials if desired.
 
