@@ -9,7 +9,6 @@ void setup() {
   const char* baseSSID = "ESP32-AP-";
   const char* defaultPassword = "123456789";
   setupWiFi(baseSSID, defaultPassword);
-
 }
 
 void loop() {
