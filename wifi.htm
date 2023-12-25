@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+	<title>ESP32 FastLED Setup</title>
+	<link rel="stylesheet" href="/css/nav.css" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+</head>
+<body style="padding-bottom: 70px;">
+	<div class="page">
+	  <nav class="page__menu menu">
+	    <ul class="menu__list r-list">
+	    	<li><a href="/"><h2>ESPLED&nbsp;</h2></a></li>
+			<li class="menu__group"><a href="/" class="menu__link r-link text-underlined">PLAY</a></li>
+			<li class="menu__group"><a href="/setup.htm" class="menu__link r-link text-underlined">SETUP</a></li>
+			<li class="menu__group"><a href="/wifi.htm" class="menu__link r-link text-underlined" style="background-color: #d0d0d0;">WIFI</a></li>
+			<li class="menu__group"><a href="/about.htm" class="menu__link r-link text-underlined">ABOUT</a></li>
+	    </ul>
+	  </nav>
+	</div>
+
+	<form action='/clearprefs' method='get'>
+    	<input type='submit' value='Factory Reset'>
+    </form>
+    <br/>
+	<form action='/submit'>
+    	SSID: <input type='text' name='ssid'><br>
+    	Password: <input type='password' name='password'><br>
+		<input type='submit' value='Save'>
+    </form>
+</body>
+</html>
