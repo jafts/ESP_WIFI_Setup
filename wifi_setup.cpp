@@ -1,40 +1,55 @@
 #include "wifi_setup.h"
 #include "custom_web.h"
 
+char ssid[32];
+char password[64];
 bool isInAPMode = false;
 
 void setupWiFi(const char* baseSSID, const char* defaultPassword) {
-    uint8_t mac[6];
-    WiFi.macAddress(mac);
-    snprintf(ssid, sizeof(ssid), "%s%02X%02X%02X", baseSSID, mac[3], mac[4], mac[5]);
-
+    Serial.println("Attempting to connect to stored WiFi...");
     preferences.begin("wifi", false);
-    size_t ssidLen = preferences.getBytes("ssid", ssid, sizeof(ssid));
-    size_t passwordLen = preferences.getBytes("password", password, sizeof(password));
 
+    size_t ssidLen = preferences.getBytes(clientModeSSIDKey, ssid, sizeof(ssid));
+
+
+    preferences.getBytes(clientModeSSIDKey, ssid, sizeof(ssid));
+    preferences.getBytes(clientModePasswordKey, password, sizeof(password));
+    
+    // If no stored client mode SSID, use the default one with MAC address
     if (ssidLen == 0) {
-        //strcpy(ssid, defaultSSID);
-        strcpy(password, defaultPassword);
+        Serial.println("No credentials found. Setting up default AP");
+        uint8_t mac[6];
+        WiFi.macAddress(mac);
+        snprintf(ssid, sizeof(ssid), "%s%02X%02X%02X", baseSSID, mac[3], mac[4], mac[5]);
+        strcpy(password, defaultPassword); // Use default password for AP mode
     }
 
     WiFi.begin(ssid, password);
     unsigned long startAttemptTime = millis();
-  
-    while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < 5000) {
+    unsigned long runningAttemptTime = startAttemptTime;
+    while (WiFi.status() != WL_CONNECTED && runningAttemptTime - startAttemptTime < 5000) {
+        runningAttemptTime = millis();
         delay(500);
-        Serial.print(".");
+        Serial.print('.');
     }
 
     if (WiFi.status() != WL_CONNECTED) {
-        Serial.println("\nFailed to connect to WiFi. Entering AP mode.");
+        Serial.println("Failed to connect, entering AP mode...");
+
+        // Use default SSID and Password for AP mode if not already set
+        uint8_t mac[6];
+        WiFi.macAddress(mac);
+        snprintf(ssid, sizeof(ssid), "%s%02X%02X%02X", baseSSID, mac[3], mac[4], mac[5]);
+
         startAPMode();
         setupWebServer();
     } else {
+        Serial.println("Connected to WiFi!");
         setupWebServer();
-        Serial.println("\nConnected to WiFi");
-        Serial.println("Web server started. Connect to " + WiFi.localIP().toString());
         isInAPMode = false;
     }
+
+    preferences.end(); // Close the preferences
 }
 
 void startAPMode() {
