@@ -6,7 +6,7 @@
 void setup() {    
   Serial.begin(115200);
   // Setup WiFi with a base SSID and a default password
-  const char* baseSSID = "LEDAP-";
+  const char* baseSSID = "ESP32-AP-";
   const char* defaultPassword = "123456789";
   setupWiFi(baseSSID, defaultPassword);
 
